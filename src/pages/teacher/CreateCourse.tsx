@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { coursesApi, CreateCourseData } from '../../api/courses.api';
 import { uploadApi } from '../../api/upload.api';
 import { Loader } from '../../components/common/Loader';
-import { FileText, X, Upload, File, BookOpen, Video, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { FileText, X, Upload, File, BookOpen, Video, CheckCircle2, AlertCircle, Loader2, Copy } from 'lucide-react';
 import { toast } from 'react-toastify';
 import './CreateCourse.css';
 
@@ -143,6 +143,7 @@ const CreateCourse: React.FC = () => {
   const [thumbnail, setThumbnail] = useState<FileWithPreview | null>(null);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [error, setError] = useState('');
+  const [createdCourseId, setCreatedCourseId] = useState<string | null>(null);
 
   // Upload progress states
   const [thumbUpload,  setThumbUpload]  = useState<UploadState>(initUpload());
@@ -395,10 +396,15 @@ const CreateCourse: React.FC = () => {
       console.log('Files array length:', courseData.files.length);
 
       // Submit to API
-      await coursesApi.create(courseData);
-
-      // Redirect to courses list
-      navigate('/teacher/courses');
+      const response: any = await coursesApi.create(courseData);
+      const newCourseId = response?.data?._id || response?._id || response?.data?.id || response?.id;
+      if (newCourseId) {
+        setCreatedCourseId(newCourseId);
+        toast.success('تم إنشاء الكورس بنجاح!');
+      } else {
+        toast.success('تم إنشاء الكورس بنجاح!');
+        navigate('/teacher/courses');
+      }
     } catch (err) {
       console.error('Error creating course:', err);
       setError('Failed to create course. Please try again.');
@@ -408,8 +414,46 @@ const CreateCourse: React.FC = () => {
   };
 
   // Show loading state
-  if (isLoading) {
-    return <Loader fullScreen text="Creating course..." />;
+  if (isLoading && !createdCourseId) {
+    return <Loader fullScreen text="جاري إنشاء الكورس..." />;
+  }
+
+  // Show course ID modal after successful creation
+  if (createdCourseId) {
+    const copyId = () => {
+      navigator.clipboard.writeText(createdCourseId);
+      toast.success('تم نسخ ID الكورس');
+    };
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="mx-auto max-w-lg rounded-2xl border border-border bg-card p-8 text-center shadow-soft">
+          <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-success/10 text-success">
+            <CheckCircle2 className="size-8" />
+          </div>
+          <h2 className="mb-2 text-2xl font-bold">تم إنشاء الكورس بنجاح! 🎉</h2>
+          <p className="mb-6 text-sm text-muted-foreground">
+            احتفظ بـ ID الكورس التالي وشاركه مع طلابك ليتمكنوا من التسجيل فيه عبر صفحة البحث.
+          </p>
+          <div className="mb-6 rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 p-4">
+            <p className="mb-1 text-xs font-bold text-muted-foreground">معرّف الكورس (Course ID)</p>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 truncate rounded-lg bg-muted px-3 py-2 text-sm font-bold text-primary" dir="ltr">{createdCourseId}</code>
+              <button onClick={copyId} type="button" className="flex-shrink-0 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90">
+                <Copy className="size-4" />
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
+            <button onClick={() => navigate(`/teacher/courses/${createdCourseId}/manage`)} type="button" className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90">
+              إدارة الكورس
+            </button>
+            <button onClick={() => navigate('/teacher/courses')} type="button" className="rounded-xl border border-border px-5 py-2.5 text-sm font-bold transition-colors hover:bg-muted">
+              رجوع للكورسات
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
