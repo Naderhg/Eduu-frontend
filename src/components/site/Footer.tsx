@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Facebook, GraduationCap, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Facebook, GraduationCap, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { categories } from '../../lib/courses';
 
 export function Footer() {
+  const subjects = categories.filter(c => c !== 'الكل').slice(0, 6);
+
   return (
     <footer className="mt-24 bg-navy text-navy-foreground" dir="rtl">
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
@@ -11,17 +14,17 @@ export function Footer() {
               <GraduationCap className="size-5" />
             </span>
             <span className="text-xl font-extrabold">
-              Dev <span className="text-primary">Community</span>
+              منصة <span className="text-primary">التفوق</span>
             </span>
           </div>
           <p className="mt-4 text-sm text-navy-foreground/70">
-            منصة تعليمية عربية تجمع أفضل المدربين وأحدث الكورسات في مكان واحد.
+            منصة تعليمية لطلاب المرحلة الثانوية، شرح كامل لكل المواد، امتحانات ومراجعات، مجاناً بالكامل.
           </p>
           <div className="mt-5 flex gap-3">
             {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (
               <span
                 key={i}
-                className="flex size-9 items-center justify-center rounded-lg bg-navy-foreground/10"
+                className="flex size-9 items-center justify-center rounded-lg bg-navy-foreground/10 transition-colors hover:bg-primary hover:text-primary-foreground cursor-pointer"
               >
                 <Icon className="size-4" />
               </span>
@@ -32,27 +35,35 @@ export function Footer() {
         <div>
           <h3 className="font-bold">المنصة</h3>
           <ul className="mt-4 space-y-2 text-sm text-navy-foreground/70">
-            <li><Link to="/courses">كل الكورسات</Link></li>
-            <li><Link to="/about">من نحن</Link></li>
-            <li><Link to="/contact">تواصل معنا</Link></li>
+            <li><Link to="/courses" className="hover:text-primary">كل الكورسات</Link></li>
+            <li><Link to="/about" className="hover:text-primary">من نحن</Link></li>
+            <li><Link to="/contact" className="hover:text-primary">تواصل معنا</Link></li>
+            <li><Link to="/register" className="hover:text-primary">سجّل مجاناً</Link></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-bold">التصنيفات</h3>
+          <h3 className="font-bold">المواد الدراسية</h3>
           <ul className="mt-4 space-y-2 text-sm text-navy-foreground/70">
-            <li>تطوير الويب</li>
-            <li>التصميم</li>
-            <li>التسويق</li>
-            <li>البيانات والذكاء الاصطناعي</li>
+            {subjects.map((s) => (
+              <li key={s}><Link to="/courses" className="hover:text-primary">{s}</Link></li>
+            ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="font-bold">النشرة البريدية</h3>
-          <p className="mt-4 text-sm text-navy-foreground/70">
-            اشترك لتصلك أحدث الكورسات والعروض.
-          </p>
+          <h3 className="font-bold">تواصل معنا</h3>
+          <ul className="mt-4 space-y-3 text-sm text-navy-foreground/70">
+            <li className="flex items-center gap-2">
+              <Mail className="size-4 text-primary" /> support@tafuq.edu
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone className="size-4 text-primary" /> +20 1208349801
+            </li>
+            <li className="flex items-center gap-2">
+              <MapPin className="size-4 text-primary" /> القاهرة، مصر
+            </li>
+          </ul>
           <form className="mt-4 flex gap-2" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
@@ -67,7 +78,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-navy-foreground/10 py-5 text-center text-xs text-navy-foreground/60">
-        © {new Date().getFullYear()} Dev Community. جميع الحقوق محفوظة.
+        © {new Date().getFullYear()} منصة التفوق. جميع الحقوق محفوظة.
       </div>
     </footer>
   );

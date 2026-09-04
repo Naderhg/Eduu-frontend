@@ -13,17 +13,17 @@ const Contact = () => {
         <div>
           <h1 className="text-4xl font-extrabold">تواصل معنا</h1>
           <p className="mt-4 leading-8 text-muted-foreground">
-            عندك سؤال عن كورس معين أو عايز تنضم كمدرب؟ ابعتلنا وهنرد خلال ٢٤ ساعة.
+            عندك سؤال عن كورس معين أو عايز تنضم كمدرس؟ ابعتلنا وهنرد خلال ٢٤ ساعة.
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">
-              <Mail className="size-5 text-primary" /> support@deev-community.com
+              <Mail className="size-5 text-primary" /> support@tafuq.edu
             </li>
             <li className="flex items-center gap-3">
               <Phone className="size-5 text-primary" /> +20 1208349801
             </li>
             <li className="flex items-center gap-3">
-              <MapPin className="size-5 text-primary" /> Nasr City, Cairo
+              <MapPin className="size-5 text-primary" /> القاهرة، مصر
             </li>
           </ul>
         </div>
