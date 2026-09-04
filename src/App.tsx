@@ -150,9 +150,7 @@ const App = () => (
           path="/teacher/courses/:id/assignments/new"
           element={
             <ProtectedRoute allowedRoles={['TEACHER']}>
-              <TeacherShellWrapper>
-                <CreateAssignment />
-              </TeacherShellWrapper>
+              <CreateAssignment />
             </ProtectedRoute>
           }
         />
@@ -160,9 +158,7 @@ const App = () => (
           path="/teacher/assignments/create"
           element={
             <ProtectedRoute allowedRoles={['TEACHER']}>
-              <TeacherShellWrapper>
-                <CreateAssignment />
-              </TeacherShellWrapper>
+              <CreateAssignment />
             </ProtectedRoute>
           }
         />
