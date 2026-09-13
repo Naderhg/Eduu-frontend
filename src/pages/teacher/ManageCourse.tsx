@@ -37,6 +37,19 @@ export interface CourseWithDetails {
 }
 
 const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || '';
+const STORAGE_VPS_IP = '209.159.159.106';
+
+const getMediaUrl = (url: string): string => {
+  if (!url) return '';
+  if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
+    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+  }
+  if (url.startsWith('http')) return url;
+  if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
+    return `/storage${url}`;
+  }
+  return `${BACKEND_URL}${url}`;
+};
 
 // ============ Lesson Modal Component ============
 interface LessonModalProps {

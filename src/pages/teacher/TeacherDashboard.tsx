@@ -10,6 +10,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import './TeacherDashboard.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const STORAGE_VPS_IP = '209.159.159.106';
+
+const getMediaUrl = (url: string): string => {
+  if (!url) return '';
+  if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
+    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+  }
+  if (url.startsWith('http')) return url;
+  if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
+    return `/storage${url}`;
+  }
+  return `${API_BASE_URL}${url}`;
+};
 
 export const TeacherDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -167,7 +180,7 @@ export const TeacherDashboard: React.FC = () => {
                 <div className="course-thumbnail">
                   {course.thumbnail ? (
                     <img 
-                      src={course.thumbnail.startsWith('http') ? course.thumbnail : `${API_BASE_URL}${course.thumbnail}`} 
+                      src={getMediaUrl(course.thumbnail)} 
                       alt={course.title} 
                       className="course-thumbnail-img"
                       onError={(e) => {

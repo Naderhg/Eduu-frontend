@@ -11,13 +11,21 @@ import { DashboardShell, PageHeader, StatCard } from '../../components/dashboard
 import { teacherNav, teacherComingSoon } from '../../lib/dashboard-data';
 import { toast } from 'react-toastify';
 
+const STORAGE_VPS_IP = '209.159.159.106';
+
 const getMediaUrl = (url: string): string => {
   if (!url) return '';
+  if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
+    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+  }
   if (url.startsWith('http')) return url;
   if (url.startsWith('/uploads/') || url.startsWith('/api/files/')) {
     const apiBaseUrl = import.meta.env.VITE_API_URL || '/api';
     const backendBaseUrl = apiBaseUrl.replace('/api', '');
     return `${backendBaseUrl}${url}`;
+  }
+  if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
+    return `/storage${url}`;
   }
   return url;
 };
