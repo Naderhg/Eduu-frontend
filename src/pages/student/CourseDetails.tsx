@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { StudentShellWrapper } from './StudentShellWrapper';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://deev--edu-platform--fnj72wsf9xl6.code.run';
+const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://162.35.184.86';
 
 const getMediaUrl = (url: string): string => {
   if (!url) return '';

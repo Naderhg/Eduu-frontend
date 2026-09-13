@@ -36,7 +36,7 @@ export interface CourseWithDetails {
   updatedAt: string;
 }
 
-const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://deev--edu-platform--fnj72wsf9xl6.code.run';
+const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://162.35.184.86';
 
 // ============ Lesson Modal Component ============
 interface LessonModalProps {

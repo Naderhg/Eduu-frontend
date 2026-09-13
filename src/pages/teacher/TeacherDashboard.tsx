@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './TeacherDashboard.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://deev--edu-platform--fnj72wsf9xl6.code.run/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://162.35.184.86/api';
 
 export const TeacherDashboard: React.FC = () => {
   const { user } = useAuth();

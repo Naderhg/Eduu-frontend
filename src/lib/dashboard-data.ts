@@ -13,17 +13,17 @@ export const teacherNav = [
   { to: '/teacher/assignments', label: 'الواجبات' },
   { to: '/teacher/students', label: 'الطلاب' },
   { to: '/teacher/chat', label: 'المحادثات' },
+  { to: '/teacher/exams', label: 'الامتحانات' },
+  { to: '/teacher/quizzes', label: 'اختبارات فورية' },
+  { to: '/teacher/question-bank', label: 'بنوك الأسئلة' },
+  { to: '/teacher/import', label: 'استيراد بنك أسئلة' },
+  { to: '/teacher/grading', label: 'تصحيح على PDF' },
+  { to: '/teacher/gradescope', label: 'Gradescope' },
+  { to: '/teacher/live', label: 'بث مباشر / Zoom' },
+  { to: '/teacher/parents', label: 'إحصائيات أولياء الأمور' },
 ] as const;
 
-export const teacherComingSoon = [
-  { label: 'اختبارات فورية' },
-  { label: 'بنوك الأسئلة' },
-  { label: 'استيراد بنك أسئلة' },
-  { label: 'تصحيح على PDF' },
-  { label: 'Gradescope' },
-  { label: 'بث مباشر / Zoom' },
-  { label: 'إحصائيات أولياء الأمور' },
-] as const;
+export const teacherComingSoon = [] as const;
 
 export const studentNav = [
   { to: '/student', label: 'نظرة عامة', exact: true },

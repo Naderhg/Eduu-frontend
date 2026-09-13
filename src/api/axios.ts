@@ -1,7 +1,7 @@
 // src/api/axios.ts
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://deev--edu-platform--fnj72wsf9xl6.code.run/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://162.35.184.86/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,

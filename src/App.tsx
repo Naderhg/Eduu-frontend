@@ -126,6 +126,70 @@ const App = () => (
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/teacher/exams"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherExams />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/quizzes"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherQuizzes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/question-bank"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherQuestionBank />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/import"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherImport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/grading"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherGrading />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/gradescope"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherGradescope />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/live"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherLive />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/parents"
+          element={
+            <ProtectedRoute allowedRoles={['TEACHER']}>
+              <TeacherParents />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Teacher Routes - existing pages still wrapped in DashboardShell */}
         <Route

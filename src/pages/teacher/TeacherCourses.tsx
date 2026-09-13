@@ -15,7 +15,7 @@ const getMediaUrl = (url: string): string => {
   if (!url) return '';
   if (url.startsWith('http')) return url;
   if (url.startsWith('/uploads/') || url.startsWith('/api/files/')) {
-    const apiBaseUrl = import.meta.env.VITE_API_URL || 'https://deev--edu-platform--fnj72wsf9xl6.code.run/api';
+    const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://162.35.184.86/api';
     const backendBaseUrl = apiBaseUrl.replace('/api', '');
     return `${backendBaseUrl}${url}`;
   }
