@@ -24,6 +24,6 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "http://162.35.184.86/api"
+    "VITE_API_URL": "/api"
   }
 }

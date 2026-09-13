@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://162.35.184.86';
+const BACKEND_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || '';
 
 export interface SocketMessage {
   _id: string;
