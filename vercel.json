@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "http://162.35.184.86/api/$1",
+      "dest": "https://162.35.184.86.nip.io/api/$1",
       "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     },
     {
