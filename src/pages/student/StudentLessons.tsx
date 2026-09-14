@@ -4,6 +4,20 @@ import { coursesApi, Course } from '../../api/courses.api';
 import { lessonsApi, Lesson } from '../../api/lessons.api';
 import { Loader } from '../../components/common/Loader';
 import { StudentShellWrapper } from './StudentShellWrapper';
+
+const STORAGE_VPS_IP = '209.159.159.106';
+
+const getMediaUrl = (url: string): string => {
+  if (!url) return '';
+  if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
+    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+  }
+  if (url.startsWith('http')) return url;
+  if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
+    return `/storage${url}`;
+  }
+  return url;
+};
 import { BookOpen, Video, FileText, HelpCircle, Play, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
 
 interface CourseWithLessons {
@@ -106,7 +120,7 @@ export const StudentLessons: React.FC = () => {
                   <button onClick={() => toggleCourse(course._id)} className="flex w-full items-center justify-between p-4 text-right transition-colors hover:bg-muted/50">
                     <div className="flex items-center gap-3">
                       {course.thumbnail ? (
-                        <img src={course.thumbnail} alt={course.title} className="size-12 rounded-lg object-cover" />
+                        <img src={getMediaUrl(course.thumbnail)} alt={course.title} className="size-12 rounded-lg object-cover" />
                       ) : (
                         <span className="flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary"><BookOpen className="size-6" /></span>
                       )}

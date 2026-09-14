@@ -7,6 +7,20 @@ import { Loader } from '../../components/common/Loader';
 import { Search, BookOpen, User, Play, CheckCircle2, Video, FileText, Clock } from 'lucide-react';
 import { StudentShellWrapper } from './StudentShellWrapper';
 
+const STORAGE_VPS_IP = '209.159.159.106';
+
+const getMediaUrl = (url: string): string => {
+  if (!url) return '';
+  if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
+    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+  }
+  if (url.startsWith('http')) return url;
+  if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
+    return `/storage${url}`;
+  }
+  return url;
+};
+
 export const StudentCourses: React.FC = () => {
   const [searchId, setSearchId] = useState('');
   const [searchedCourse, setSearchedCourse] = useState<Course | null>(null);
@@ -96,7 +110,7 @@ export const StudentCourses: React.FC = () => {
             {/* Course thumbnail or video */}
             {searchedCourse.thumbnail && (
               <div className="relative aspect-video w-full overflow-hidden bg-muted">
-                <img src={searchedCourse.thumbnail} alt={searchedCourse.title} className="size-full object-cover" />
+                <img src={getMediaUrl(searchedCourse.thumbnail)} alt={searchedCourse.title} className="size-full object-cover" />
                 {searchedCourse.videoUrl && (
                   <Link to={`/student/courses/${searchedCourse._id}`} className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity hover:opacity-100">
                     <span className="flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground"><Play className="size-6" /></span>
@@ -189,7 +203,7 @@ export const StudentCourses: React.FC = () => {
                   {/* Thumbnail */}
                   {course.thumbnail ? (
                     <div className="aspect-video w-full overflow-hidden bg-muted">
-                      <img src={course.thumbnail} alt={course.title} className="size-full object-cover transition-transform group-hover:scale-105" />
+                      <img src={getMediaUrl(course.thumbnail)} alt={course.title} className="size-full object-cover transition-transform group-hover:scale-105" />
                     </div>
                   ) : (
                     <div className="flex aspect-video w-full items-center justify-center bg-muted">
