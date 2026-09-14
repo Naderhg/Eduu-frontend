@@ -282,7 +282,7 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
           className="svp-hidden-video"
           playsInline
           preload="metadata"
-          crossOrigin={videoUrl.includes('cloudinary.com') ? 'anonymous' : 'use-credentials'}
+          crossOrigin="anonymous"
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
         />
