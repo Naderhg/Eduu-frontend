@@ -221,6 +221,24 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
   }, []);
 
   const toggleFullscreen = useCallback(() => {
+    // On mobile (direct video, no canvas) - use the video element's fullscreen
+    if (isMobile || canvasError) {
+      const video = videoRef.current;
+      if (!video) return;
+      if (!document.fullscreenElement) {
+        // iOS Safari requires webkitEnterFullscreen on the video element
+        const anyVideo = video as any;
+        if (anyVideo.webkitEnterFullscreen) {
+          anyVideo.webkitEnterFullscreen();
+        } else if (video.requestFullscreen) {
+          video.requestFullscreen().catch(console.error);
+        }
+      } else {
+        document.exitFullscreen();
+      }
+      return;
+    }
+    // Desktop (canvas mode) - fullscreen the container
     const el = containerRef.current;
     if (!el) return;
     if (!document.fullscreenElement) {
@@ -228,7 +246,7 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
     } else {
       document.exitFullscreen();
     }
-  }, []);
+  }, [isMobile, canvasError]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = parseFloat(e.target.value);
