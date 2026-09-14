@@ -1,4 +1,4 @@
-import axiosInstance from './axios';
+import axiosInstance, { videoUploadInstance } from './axios';
 
 export interface LessonQuestion {
   _id?: string;
@@ -69,7 +69,7 @@ export const lessonsApi = {
   uploadVideo: (courseId: string, lessonId: string, file: File): Promise<{ success: boolean; data: any }> => {
     const formData = new FormData();
     formData.append('video', file);
-    return axiosInstance.post(`/lessons/course/${courseId}/${lessonId}/upload-video`, formData, {
+    return videoUploadInstance.post(`/lessons/course/${courseId}/${lessonId}/upload-video`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then(res => res.data);
   },
@@ -77,7 +77,7 @@ export const lessonsApi = {
   uploadFiles: (courseId: string, lessonId: string, files: File[]): Promise<{ success: boolean; data: any }> => {
     const formData = new FormData();
     files.forEach(file => formData.append('files', file));
-    return axiosInstance.post(`/lessons/course/${courseId}/${lessonId}/upload-files`, formData, {
+    return videoUploadInstance.post(`/lessons/course/${courseId}/${lessonId}/upload-files`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then(res => res.data);
   },
