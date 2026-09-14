@@ -12,11 +12,12 @@ import { teacherNav, teacherComingSoon } from '../../lib/dashboard-data';
 import { toast } from 'react-toastify';
 
 const STORAGE_VPS_IP = '209.159.159.106';
+const STORAGE_VPS_HTTPS = 'https://209.159.159.106.nip.io';
 
 const getMediaUrl = (url: string): string => {
   if (!url) return '';
   if (url.startsWith('http') && url.includes(STORAGE_VPS_IP)) {
-    return url.replace(`http://${STORAGE_VPS_IP}`, '/storage');
+    return url.replace(`http://${STORAGE_VPS_IP}`, STORAGE_VPS_HTTPS);
   }
   if (url.startsWith('http')) return url;
   if (url.startsWith('/uploads/') || url.startsWith('/api/files/')) {
@@ -25,7 +26,7 @@ const getMediaUrl = (url: string): string => {
     return `${backendBaseUrl}${url}`;
   }
   if (url.startsWith('/videos/') || url.startsWith('/thumbnails/') || url.startsWith('/files/')) {
-    return `/storage${url}`;
+    return `${STORAGE_VPS_HTTPS}${url}`;
   }
   return url;
 };
