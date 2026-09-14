@@ -317,7 +317,7 @@ export const CourseDetails: React.FC = () => {
                           <div className="mb-4">
                             <h4 className="mb-2 flex items-center gap-1.5 text-sm font-bold"><Video className="size-4 text-primary" /> فيديو الدرس</h4>
                             <div className="overflow-hidden rounded-xl border border-border bg-black">
-                              <video src={getMediaUrl(lesson.videoUrl)} controls playsInline crossOrigin="anonymous" className="aspect-video w-full" />
+                              <video src={getMediaUrl(lesson.videoUrl)} controls playsInline className="aspect-video w-full" />
                             </div>
                           </div>
                         )}

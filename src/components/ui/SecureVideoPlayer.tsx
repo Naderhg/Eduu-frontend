@@ -296,7 +296,7 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
           className={isMobile || canvasError ? 'svp-mobile-video' : 'svp-hidden-video'}
           playsInline
           preload="metadata"
-          crossOrigin="anonymous"
+          {...(isMobile || canvasError ? {} : { crossOrigin: 'anonymous' })}
           controls={isMobile || canvasError}
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
