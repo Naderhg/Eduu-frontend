@@ -42,6 +42,13 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
   const [isLoading,    setIsLoading]    = useState(true);
   const [isBuffering,  setIsBuffering]  = useState(false);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [canvasError,  setCanvasError]  = useState(false);
+
+  // Detect mobile devices - canvas rendering doesn't work well on mobile due to CORS
+  const isMobile = typeof window !== 'undefined' && (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    window.innerWidth < 768
+  );
 
   /* ── Canvas renderer: draws video frames → protects from screen recording ── */
   const startDrawing = useCallback(() => {
@@ -57,7 +64,14 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
           canvas.width  = video.videoWidth  || 1280;
           canvas.height = video.videoHeight || 720;
         }
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        try {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        } catch (e) {
+          // Canvas tainted (CORS) - fallback to direct video on mobile
+          setCanvasError(true);
+          stopDrawing();
+          return;
+        }
       }
       rafRef.current = requestAnimationFrame(draw);
     };
@@ -275,24 +289,27 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
         onMouseMove={resetHideTimer}
         onTouchStart={resetHideTimer}
       >
-        {/* Hidden real video element – only canvas is visible */}
+        {/* Hidden real video element – only canvas is visible on desktop */}
         <video
           ref={videoRef}
           src={videoUrl}
-          className="svp-hidden-video"
+          className={isMobile || canvasError ? 'svp-mobile-video' : 'svp-hidden-video'}
           playsInline
           preload="metadata"
           crossOrigin="anonymous"
+          controls={isMobile || canvasError}
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
         />
 
-        {/* Canvas – visible output (screen-recording protection) */}
-        <canvas
-          ref={canvasRef}
-          className="svp-canvas"
-          onClick={togglePlay}
-        />
+        {/* Canvas – visible output (screen-recording protection) - desktop only */}
+        {!isMobile && !canvasError && (
+          <canvas
+            ref={canvasRef}
+            className="svp-canvas"
+            onClick={togglePlay}
+          />
+        )}
 
         {/* Loading / Buffering overlay */}
         {(isLoading || isBuffering) && (

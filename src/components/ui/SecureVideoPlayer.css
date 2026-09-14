@@ -52,6 +52,17 @@
   left: 0;
 }
 
+/* ── Mobile video (visible directly, no canvas) ── */
+.svp-mobile-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  object-fit: contain;
+  background: #000;
+}
+
 /* ── Canvas (the actual visible surface) ── */
 .svp-canvas {
   display: block;
